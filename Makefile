@@ -9,7 +9,7 @@ all: $(TARGETS)
 	
 %.gb: %.o
 	rgblink -o $@ -n $(@:%.gb=%.sym) $<
-	#rgbfix -jv -t $(shell echo $(notdir $(@:%.gb=%)) | tail -c 14) $@
+	rgbfix -jv $@
 	
 clean:
 	@rm -f $(TARGETS) $(TARGETS:%.gb=%.sym) $(TARGETS:%.gb=%.o)
