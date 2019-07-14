@@ -255,6 +255,38 @@ _Start::
     ldh [rIF], a
     ldh [rIE], a
     di
+
+    wait_ly 144
+    ; Wait for another vblank to allow for invisible frame
+    wait_ly 143
+    wait_ly 144
+
+    ld a, [RESULT_CODE]
+    cp "P"
+    jr nz, .failed
+
+    ; Set registers to Fibonacci numbers on success
+    ld b, 3
+    ld c, 5
+    ld d, 8
+    ld e, 13
+    ld h, 21
+    ld l, 34 
+    jr .done
+
+.failed
+    ; Set registers to $42 on failure
+    ld b, $42
+    ld c, b
+    ld d, b
+    ld e, b
+    ld h, b
+    ld l, b
+
+.done
+    xor a
+    ; Software breakpoint for automated testing
+    ld b, b
     halt
     ENDC
     
