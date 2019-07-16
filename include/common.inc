@@ -1,5 +1,5 @@
 INCLUDE "config.inc"
-INCLUDE "gbhw.inc"
+INCLUDE "hardware.inc"
 
 CGB_MODE: MACRO
 SECTION "CGBFlag", ROM0[$143]
