@@ -1,5 +1,5 @@
 INCLUDE "config.inc"
-INCLUDE "gbhw.inc"
+INCLUDE "hardware.inc"
 
 CGB_MODE: MACRO
 SECTION "CGBFlag", ROM0[$143]
@@ -155,3 +155,4 @@ wait_ly: MACRO
     cp \1
     jr nz, .loop\@
 ENDM
+
