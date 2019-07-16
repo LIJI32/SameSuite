@@ -148,3 +148,11 @@ nops: MACRO
     ENDC
     ENDC
 ENDM
+
+wait_ly: MACRO
+.loop\@:
+    ldh a, [rLY]
+    cp \1
+    jr nz, .loop\@
+ENDM
+
