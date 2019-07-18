@@ -257,9 +257,6 @@ _Start::
     di
 
     wait_ly 144
-    ; Wait for another vblank to allow for invisible frame
-    wait_ly 143
-    wait_ly 144
 
     ld a, [RESULT_CODE]
     cp "P"
@@ -272,7 +269,7 @@ _Start::
     ld e, 13
     ld h, 21
     ld l, 34 
-    jr .done
+    jr .sendSerial
 
 .failed
     ; Set registers to $42 on failure
@@ -283,8 +280,24 @@ _Start::
     ld h, b
     ld l, b
 
-.done
+.sendSerial
+    ld a, b
+    call SerialSendByte
+    ld a, c
+    call SerialSendByte
+    ld a, d
+    call SerialSendByte
+    ld a, e
+    call SerialSendByte
+    ld a, h
+    call SerialSendByte
+    ld a, l
+    call SerialSendByte
+
+    ; Wait for another vblank to allow for invisible frame
+    wait_ly 144
     xor a
+
     ; Software breakpoint for automated testing
     ld b, b
     halt
@@ -381,4 +394,14 @@ PrintResults::
     ld a, l
     cp (RESULTS_N_ROWS * 32) & $ff
     jr nz, .yLoop
+    ret
+
+SerialSendByte::
+    ldh [rSB], a
+    ld a, $81
+    ldh [rSC],a 
+.loop:
+    ldh a, [rSC]
+    bit 7, a
+    jr nz, .loop
     ret
