@@ -6,6 +6,14 @@ SECTION "CGBFlag", ROM0[$143]
     db $80
 ENDM
 
+SGB_MODE: MACRO
+SECTION "CGBFlag", ROM0[$146]
+    db $03
+
+SECTION "CGBLicensee", ROM0[$14B]
+    db $33
+ENDM
+
 SECTION "NopSlide", ROMX,BANK[$1]
 NopSlide:
     REPT $3FFF
