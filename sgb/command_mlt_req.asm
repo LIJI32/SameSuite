@@ -1,5 +1,5 @@
 RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 2
+RESULTS_N_ROWS EQU 3
 
 include "base.inc"
 
@@ -15,6 +15,7 @@ SgbPacket: MACRO
 CorrectResults:
 db $FF, $FE, $FF, $FF, $FF, $FF, $FE, $FD
 db $FC, $FE, $FF, $FE, $FF, $FF, $FD, $FD
+db $FD, $FF, $FF, $FD, $FD, $FD, $FD, $FF
 
 RunTest:
     ld de, $c000
@@ -113,6 +114,69 @@ RunTest:
     SgbPacket MLT_REQ_3
 
     SgbPacket MLT_REQ_2 ; This should increment the player 5 times
+    ldh a, [rP1]
+    call StoreResult
+
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    call Increment
+
+    SgbPacket MLT_REQ_2
+    ldh a, [rP1]
+    call StoreResult
+
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    call Increment
+    call Increment
+
+    SgbPacket MLT_REQ_2
+    ldh a, [rP1]
+    call StoreResult
+
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    call Increment
+    call Increment
+    call Increment
+
+    SgbPacket MLT_REQ_2
+    ldh a, [rP1]
+    call StoreResult
+
+; Test if incrementing within the glitched mode works
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+
+    SgbPacket MLT_REQ_2
+    call Increment
+    ldh a, [rP1]
+    call StoreResult
+
+    call Increment
+    ldh a, [rP1]
+    call StoreResult
+
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    call Increment
+
+    SgbPacket MLT_REQ_2
+    call Increment
+    ldh a, [rP1]
+    call StoreResult
+
+    call Increment
+    ldh a, [rP1]
+    call StoreResult
+
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    call Increment
+    call Increment
+
+    SgbPacket MLT_REQ_2
+    call Increment
     ldh a, [rP1]
     call StoreResult
 
