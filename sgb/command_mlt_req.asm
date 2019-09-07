@@ -68,7 +68,7 @@ RunTest:
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
 
-    SgbPacket MLT_REQ_1
+    SgbPacket MLT_REQ_1 ; Each of these increments the player 5 times before it gets ANDed
     ldh a, [rP1]
     call StoreResult
 
@@ -104,7 +104,7 @@ RunTest:
     SgbPacket MLT_REQ_3
     ldh a, [rP1]
     call StoreResult
-    SgbPacket MLT_REQ_3
+    SgbPacket MLT_REQ_3 ; This should increment the player 6 times before it gets ANDed
     ldh a, [rP1]
     call StoreResult
 
@@ -112,7 +112,7 @@ RunTest:
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
 
-    SgbPacket MLT_REQ_2 ; Sending this SGB packet increments the player twice
+    SgbPacket MLT_REQ_2 ; This should increment the player 5 times
     ldh a, [rP1]
     call StoreResult
 
