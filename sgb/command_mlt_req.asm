@@ -14,7 +14,7 @@ SgbPacket: MACRO
 
 CorrectResults:
 db $FF, $FE, $FF, $FF, $FF, $FF, $FE, $FD
-db $FC, $FE, $FF, $FE, $FF, $00, $00, $00
+db $FC, $FE, $FF, $FE, $FF, $FD, $00, $00
 
 RunTest:
     ld de, $c000
@@ -99,8 +99,15 @@ RunTest:
     ldh a, [rP1]
 	call StoreResult
 
-	xor a
+; Test if invalid mode 2 has a glitched player 3
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+
+    SgbPacket MLT_REQ_2 ; Sending this SGB packet increments the player twice
+    ldh a, [rP1]
 	call StoreResult
+
+	xor a
 	call StoreResult
 	call StoreResult
 	ret
