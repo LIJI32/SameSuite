@@ -14,7 +14,7 @@ SgbPacket: MACRO
 
 CorrectResults:
 db $FF, $FE, $FF, $FF, $FF, $FF, $FE, $FD
-db $FC, $FE, $FF, $FE, $FF, $FD, $00, $00
+db $FC, $FE, $FF, $FE, $FF, $FF, $FD, $FD
 
 RunTest:
     ld de, $c000
@@ -22,47 +22,47 @@ RunTest:
 ; Initial value always reads out as controller 1
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
 ; Check that incrementing works as expected
-	call Increment
+    call Increment
 
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
 ; Test to see if the controller value is reset by going back to 1 player
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
 ; Test to see the controller value in unsupported MLT_REQ 2
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_2
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
-	call Increment
+    call Increment
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
 ; Test to see the controller order in MLT_REQ 3
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
-	call Increment
+    call Increment
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
-	call Increment
+    call Increment
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
-	call Increment
+    call Increment
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
 ; Test if switching from 3 to 1 retains any state
     SgbPacket MLT_REQ_0
@@ -70,34 +70,43 @@ RunTest:
 
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
-	call Increment
+    call Increment
 
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
-	call Increment
-	call Increment
+    call Increment
+    call Increment
 
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
     SgbPacket MLT_REQ_0
     SgbPacket MLT_REQ_3
-	call Increment
-	call Increment
-	call Increment
+    call Increment
+    call Increment
+    call Increment
 
     SgbPacket MLT_REQ_1
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
+
+; Test how many times sending a packet increments
+    SgbPacket MLT_REQ_0
+    SgbPacket MLT_REQ_3
+    ldh a, [rP1]
+    call StoreResult
+    SgbPacket MLT_REQ_3
+    ldh a, [rP1]
+    call StoreResult
 
 ; Test if invalid mode 2 has a glitched player 3
     SgbPacket MLT_REQ_0
@@ -105,12 +114,9 @@ RunTest:
 
     SgbPacket MLT_REQ_2 ; Sending this SGB packet increments the player twice
     ldh a, [rP1]
-	call StoreResult
+    call StoreResult
 
-	xor a
-	call StoreResult
-	call StoreResult
-	ret
+    ret
 
 SendSgbPacket:
     push bc
@@ -170,7 +176,7 @@ Increment:
     ldh [rP1], a
     ld a, $30
     ldh [rP1], a
-	ret
+    ret
 
 StoreResult::
     ld [de], a
@@ -185,5 +191,5 @@ MLT_REQ_2:
     db $89, $02, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
 MLT_REQ_3:
     db $89, $03, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00, $00
-	
-	SGB_MODE
+
+    SGB_MODE
