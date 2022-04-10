@@ -129,14 +129,21 @@ CommonInit::
     ld a, %11100100
     ld [rBGP], a
     call LCDOff
+    ; Clea Nintendo logo left by boot ROM
+    xor a
+    ld hl, _SCRN0 + SCRN_VX_B * 8 ; Start at row #8
+    ld c, SCRN_VX_B * 2 ; Clear two rows
+.clearLogoTilemap
+    ld [hli], a
+    dec c
+    jr nz, .clearLogoTilemap
     call LoadFont
     ld hl, Palette
     ld de, $1000
     call LoadBGPalettes
     ld hl, Palette
     ld de, $0800
-    call LoadObjPalettes
-    ret
+    jp LoadObjPalettes
 
 nops: MACRO
     IF (\1) > MAX_SLIDE_LENGTH
