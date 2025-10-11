@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 2
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 2
 
 include "base.inc"
 
@@ -12,7 +12,7 @@ CorrectResults:
 db $00, $00, $00, $0f, $0f, $ff, $ff, $f0
 db $00, $00, $0f, $0f, $0f, $0f, $0f, $0f
 
-SubTest: MACRO
+MACRO SubTest
     xor a
     ldh [rNR52], a
     cpl
@@ -36,13 +36,13 @@ SubTest: MACRO
     nops \1
     ld [hl], b
 
-    ld a, [c]
+    ldh a, [c]
     ld b, a
     swap b
 
     nops 16
 
-    ld a, [c]  
+    ldh a, [c]  
     or b
     call StoreResult
 

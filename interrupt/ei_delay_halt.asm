@@ -2,7 +2,7 @@
 ; Expected behavior: the buffered interrupt is handled, but does NOT exit `halt`.
 
 
-RESULTS_N_ROWS EQU 4
+DEF RESULTS_N_ROWS EQU 4
 
 SECTION "Variables", WRAM0[$C000]
 
@@ -81,6 +81,7 @@ ENDR
     ei
 .halt
     halt
+    nop
     daa
 
     push af

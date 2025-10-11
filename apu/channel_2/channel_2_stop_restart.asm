@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 18
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 18
 
 include "base.inc"
 
@@ -36,7 +36,7 @@ db $80, $80, $80, $80, $80, $80, $80, $80
 db $80, $80, $80, $80, $80, $80, $80, $80
 db $80, $80, $80, $80, $00, $00, $00, $00
 
-SubTest: MACRO
+MACRO SubTest
     xor a
     ld c, rNR22 & $ff
     ldh [rNR52], a
@@ -52,9 +52,9 @@ SubTest: MACRO
     ldh [rNR24], a
     nops \2
     xor a
-    ld [c], a
+    ldh [c], a
     ld a, $80
-    ld [c], a
+    ldh [c], a
     ld a, $87
     ldh [rNR24], a
     nops \1

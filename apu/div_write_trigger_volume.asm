@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 4
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 4
 
 include "base.inc"
 
@@ -22,15 +22,15 @@ WaitDIV10:
     jr nz, .waitDIV
     ret
 
-SubTest: MACRO
+MACRO SubTest
     ld hl, rDIV
     ld [hl], a
 
     ld c, rNR52 & $FF
     xor a
-    ld [c], a
+    ldh [c], a
     cpl
-    ld [c], a    
+    ldh [c], a    
     ldh [rNR13], a
     ld a, $80
     ldh [rNR11], a

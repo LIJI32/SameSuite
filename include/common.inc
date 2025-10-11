@@ -1,12 +1,12 @@
 INCLUDE "config.inc"
 INCLUDE "hardware.inc"
 
-CGB_MODE: MACRO
+MACRO CGB_MODE
 SECTION "CGBFlag", ROM0[$143]
     db $80
 ENDM
 
-SGB_MODE: MACRO
+MACRO SGB_MODE
 SECTION "CGBFlag", ROM0[$146]
     db $03
 
@@ -21,8 +21,8 @@ NopSlide:
     ENDR
     ret
 
-MIN_SLIDE_LENGTH EQU ($4 + 6) ; Length of call and ret in NOPs
-MAX_SLIDE_LENGTH EQU ($3fff + MIN_SLIDE_LENGTH)
+DEF MIN_SLIDE_LENGTH EQU ($4 + 6) ; Length of call and ret in NOPs
+DEF MAX_SLIDE_LENGTH EQU ($3fff + MIN_SLIDE_LENGTH)
 
 SECTION "Home", ROM0[$150]
 
@@ -115,11 +115,11 @@ LoadBGPalettes::
 LoadPalettes::
     ld a, $80
     or e
-    ld [c], a
+    ldh [c], a
     inc c
 .loop
     ld a, [hli]
-    ld [c], a
+    ldh [c], a
     dec d
     jr nz, .loop
     ret
@@ -145,7 +145,7 @@ CommonInit::
     ld de, $0800
     jp LoadObjPalettes
 
-nops: MACRO
+MACRO nops
     IF (\1) > MAX_SLIDE_LENGTH
 
     nops MAX_SLIDE_LENGTH
@@ -164,10 +164,9 @@ nops: MACRO
     ENDC
 ENDM
 
-wait_ly: MACRO
+MACRO wait_ly
 .loop\@:
     ldh a, [rLY]
     cp \1
     jr nz, .loop\@
 ENDM
-

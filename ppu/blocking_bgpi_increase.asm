@@ -1,5 +1,5 @@
-RESULTS_START EQU $c000
-RESULTS_N_ROWS EQU 1
+DEF RESULTS_START EQU $c000
+DEF RESULTS_N_ROWS EQU 1
 
 include "base.inc"
 
@@ -8,12 +8,12 @@ CorrectResults:
 db $C4, $C5, $C4, $C5, $C4, $C5, $C4, $C5
 
 
-TEST0_STAT EQU STATF_MODE00
-TEST1_STAT EQU STATF_MODE01
-TEST2_STAT EQU STATF_MODE10
-TEST3_STAT EQU STATF_MODE10
+DEF TEST0_STAT EQU STATF_MODE00
+DEF TEST1_STAT EQU STATF_MODE01
+DEF TEST2_STAT EQU STATF_MODE10
+DEF TEST3_STAT EQU STATF_MODE10
 
-SubTest: MACRO
+MACRO SubTest
     ; Set STAT to trigger on the mode we want
     ld a, TEST\1_STAT
     ldh [rSTAT], a
@@ -34,6 +34,7 @@ SubTest: MACRO
     ; Therefore, we will delay the interrupt trigger manually
     ldh [rIF], a
     halt ; Wait until Mode 2
+    nop
     ; Delay a bit, Mode 2 normally takes 20 "nop" cycles but we'll be lenient
     ld a, 20 / 4 + 2 ; Each iteration delays by 4 cycles except the last
 .delay\@

@@ -7,9 +7,9 @@ Start::
     nop
     jp _Start
 
-MODEM_PARITY EQU $cfff
-RESULT_CODE EQU $cffe
-MODEM_TEMP EQU $cffd
+DEF MODEM_PARITY EQU $cfff
+DEF RESULT_CODE EQU $cffe
+DEF MODEM_TEMP EQU $cffd
 
 INCLUDE "common.inc"
 
@@ -32,11 +32,11 @@ ModemSleep:
     nop
     ret
 
-ModemFreq: MACRO
+MACRO ModemFreq
     dw $8000 | ($800 - $20000 / (\1))
 ENDM
 
-ModemFreqCh3: MACRO
+MACRO ModemFreqCh3
     dw $8000 | ($800 - $20000 / ((\1) * 2))
 ENDM
 
@@ -241,6 +241,7 @@ _Start::
     ldh [rIF], a
     di
     halt
+    nop
     
     ; Restart EMS flash cart
     ld a, 1
@@ -301,6 +302,7 @@ _Start::
     ; Software breakpoint for automated testing
     ld b, b
     halt
+    nop
     ENDC
     
 

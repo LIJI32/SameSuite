@@ -1,11 +1,11 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 3
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 3
 
 include "base.inc"
 
 ; This test verifies how SGB command MLT_REQ works
 
-SgbPacket: MACRO
+MACRO SgbPacket
     push hl
     ld hl, \1
     call SendSgbPacket

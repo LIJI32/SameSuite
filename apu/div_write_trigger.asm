@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 16
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 16
 
 include "base.inc"
 
@@ -35,15 +35,15 @@ TriggerAPU:
     ld [hl], a
     ret
 
-SubTest: MACRO
+MACRO SubTest
     ld hl, rDIV
     ld [hl], a
 
     ld c, rNR52 & $FF
     xor a
-    ld [c], a
+    ldh [c], a
     cpl
-    ld [c], a    
+    ldh [c], a    
     ldh [rNR13], a
     ld a, $BF - \1
     ldh [rNR11], a
@@ -55,7 +55,7 @@ SubTest: MACRO
 REPT \2
     call TriggerAPU
 ENDR
-    ld a, [c]
+    ldh a, [c]
     call StoreResult
     ENDM
 

@@ -1,11 +1,11 @@
-NB_COPIED_TILES EQU 1
-NB_EMPTY_TILES EQU 128 - NB_COPIED_TILES
-TILE_SIZE EQU 16
+DEF NB_COPIED_TILES EQU 1
+DEF NB_EMPTY_TILES EQU 128 - NB_COPIED_TILES
+DEF TILE_SIZE EQU 16
 
-TOTAL_BYTES equ (NB_COPIED_TILES + NB_EMPTY_TILES) * TILE_SIZE
+DEF TOTAL_BYTES equ (NB_COPIED_TILES + NB_EMPTY_TILES) * TILE_SIZE
 
-RESULTS_START EQUS "vTestBuf"
-RESULTS_N_ROWS EQU (NB_COPIED_TILES + 1) * 2 + 1
+DEF RESULTS_START EQUS "vTestBuf"
+DEF RESULTS_N_ROWS EQU (NB_COPIED_TILES + 1) * 2 + 1
 
 include "base.inc"
 
@@ -84,6 +84,7 @@ RunTest:
 
     call LCDOn
     halt ; Wait until the end of the first frame, as it tends to have weird behavior
+    nop
     ld a, STATF_MODE00
     ldh [rSTAT], a
 
@@ -91,6 +92,7 @@ RunTest:
     ld c, LOW(rHDMA5)
     ld a, $83
     halt ; Wait for Mode 0
+    nop
     ldh [c], a
     ; Read the HDMA counter, and append it to the test results
     ld hl, RESULTS_START + RESULTS_N_ROWS * 8 - 8
