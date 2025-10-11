@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 2
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 2
 
 include "base.inc"
 
@@ -12,7 +12,7 @@ CorrectResults:
 db $00, $00, $00, $00, $00, $00, $00, $0F
 db $00, $00, $0F, $0F, $0F, $0F, $0F, $0F
 
-SubTest: MACRO
+MACRO SubTest
     xor a
     ldh [rNR52], a
     cpl
@@ -29,9 +29,9 @@ SubTest: MACRO
     ldh [rNR32], a
     ld c, rNR34 & $FF
     ld a, $80 | \2
-    ld [c], a
+    ldh [c], a
     ld a, \3 ; 2 cycles
-    ld [c], a ; 2 cycles
+    ldh [c], a ; 2 cycles
     
     nops \1 - 4
     

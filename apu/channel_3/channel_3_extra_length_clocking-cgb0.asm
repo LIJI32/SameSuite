@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 4
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 4
 
 include "base.inc"
 
@@ -30,7 +30,7 @@ db $F4, $F4, $F0, $F0, $F0, $F0, $F0, $F0
 db $F0, $F0, $F0, $F0, $F0, $F0, $F0, $F0
 
 
-SubTest: MACRO
+MACRO SubTest
     ld hl, rNR52
     ld [rDIV], a
     xor a

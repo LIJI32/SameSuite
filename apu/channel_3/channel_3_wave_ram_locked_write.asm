@@ -1,6 +1,6 @@
-RESULTS_N_ROWS EQU 18 ; Max available
-NB_RUNS EQU RESULTS_N_ROWS / 2 ; Only half a run can be displayed per row
-NB_NOPS EQU NB_RUNS - 1
+DEF RESULTS_N_ROWS EQU 18 ; Max available
+DEF NB_RUNS EQU RESULTS_N_ROWS / 2 ; Only half a run can be displayed per row
+DEF NB_NOPS EQU NB_RUNS - 1
 
 
 SECTION "Wave RAM test memory", WRAM0[$C000]
@@ -23,7 +23,7 @@ SMCWritePtrLow:
 
 include "base.inc"
 
-CH3_FREQ EQU 2047 ; CH3 ticks every 1 MHz
+DEF CH3_FREQ EQU 2047 ; CH3 ticks every 1 MHz
 
 ; The byte is written at the offset CH3 is currently reading
 ; Except on AGB, where the write is simply ignored

@@ -3,7 +3,7 @@
 ; but the channel is inactive (NR34 bit 7 never gets set)
 
 
-RESULTS_N_ROWS EQU 6
+DEF RESULTS_N_ROWS EQU 6
 
 SECTION "Results", WRAM0
 

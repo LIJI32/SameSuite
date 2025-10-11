@@ -1,11 +1,11 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 1
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 1
 
 include "base.inc"
 
 ; This test verifies which patters incrememnt MLT_REQ 01
 
-SgbPacket: MACRO
+MACRO SgbPacket
     push hl
     ld hl, \1
     call SendSgbPacket

@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 2
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 2
 
 include "base.inc"
 
@@ -11,7 +11,7 @@ CorrectResults:
 db $20, $10, $20, $30, $D0, $F0, $C0, $F0
 db $20, $10, $10, $20, $D0, $E0, $C0, $D0
 
-SubTest: MACRO
+MACRO SubTest
     ld [rDIV], a ; Reset DIV so we don't overflow too soon
     xor a
     ldh [rNR52], a

@@ -5,7 +5,7 @@ INCLUDES := $(shell find . -name "*.inc")
 all: $(TARGETS)
 
 %.o: %.asm $(INCLUDES)
-	rgbasm -h -i include/ -o $@ $<
+	rgbasm -I include/ -o $@ $<
 	
 %.gb: %.o
 	rgblink -o $@ -n $(@:%.gb=%.sym) $<

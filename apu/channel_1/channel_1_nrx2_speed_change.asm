@@ -1,5 +1,5 @@
-RESULTS_START  EQU $c000
-RESULTS_N_ROWS EQU 9
+DEF RESULTS_START  EQU $c000
+DEF RESULTS_N_ROWS EQU 9
 
 include "base.inc"
 
@@ -25,7 +25,7 @@ db $02, $02, $02, $02, $02, $02, $03, $03
 db $01, $02, $02, $02, $02, $02, $02, $02
 db $02, $02, $02, $02, $02, $03, $03, $03
 
-_SubTest: MACRO
+MACRO _SubTest
     ld c, 8
     ld [rDIV], a ; Reset DIV so we don't overflow too soon
     xor a
@@ -60,7 +60,7 @@ _SubTest: MACRO
     call StoreResult
     ENDM
     
-SubTest: MACRO
+MACRO SubTest
     _SubTest 4 + $4000 * \1, \2, \3, 0
     ENDM
 
